@@ -1,44 +1,54 @@
 package com.example.application.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "sections")
+@Data
 public class Section extends TextEntity {
 
-    //private static final byte LEVEL = 3;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chapter_id")
+    private Chapter parentChapter;
 
-    //private List<Subsection> subsections;
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "parentSection")
+    private List<Subsection> subsections;
+
     @Column
     private String text;
 
-    public Section(long id, String entityName, TextEntity parent) {
-        super(id, entityName, parent);
-    }
-
     public Section() {
-
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
+    public Section(String title, int numOrder, Chapter parentChapter, List<Subsection> subsections, String text) {
+        super(title, numOrder);
+        this.parentChapter = parentChapter;
+        this.subsections = subsections;
         this.text = text;
     }
 
-    /*public List<Subsection> getSubsections() {
-        return subsections;
+    public void addSubsectionToSection(Subsection newSubsection) {
+        if (subsections == null) subsections = new ArrayList<>();
+        subsections.add(Objects.requireNonNull(newSubsection));
+        newSubsection.setParentSection(this);
     }
 
-    public void setSubsections(List<Subsection> subsections) {
-        this.subsections = subsections;
+    @Override
+    public String toString() {
+        return "Section{" +
+                "parentChapter=" + parentChapter +
+                ", text='" + text + '\'' +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", numOrder=" + numOrder +
+                '}';
     }
-*/
-/*    public static byte getLEVEL() {
-        return LEVEL;
-    }*/
 }

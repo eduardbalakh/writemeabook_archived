@@ -1,15 +1,24 @@
 package com.example.application.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
+
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name = "subsections")
+@Data
 public class Subsection extends TextEntity {
 
-    private static final byte LEVEL = 4;
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "section_id")
     private Section parentSection;
 
+    @Column
     private String text;
 
-    public Subsection(long id, String entityName, TextEntity parent) {
-        super(id, entityName, parent);
+    public Subsection() {
     }
 
     public Section getParentSection() {
@@ -28,7 +37,15 @@ public class Subsection extends TextEntity {
         this.text = text;
     }
 
-    public static byte getLEVEL() {
-        return LEVEL;
+    @Override
+    public String toString() {
+        return "Subsection{" +
+                "parentSection=" + parentSection +
+                ", text='" + text + '\'' +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", numOrder=" + numOrder +
+                '}';
     }
 }
+

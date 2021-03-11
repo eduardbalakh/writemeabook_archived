@@ -1,9 +1,5 @@
 package com.example.application.views.main;
 
-import com.example.application.model.Book;
-import com.example.application.model.BookProject;
-import com.example.application.model.Chapter;
-import com.example.application.model.TextEntity;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.helloworld.HelloWorldView;
 import com.vaadin.flow.component.Component;
@@ -13,10 +9,8 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,14 +18,10 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.component.treegrid.TreeGrid;
-import com.vaadin.flow.data.provider.hierarchy.TreeData;
-import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -83,9 +73,9 @@ public class MainView extends AppLayout {
 
     private Tabs createMenu() {
 
-        Tree<TextEntity> projectTreeGrid = new Tree<TextEntity>(TextEntity::getName);
+        //Tree<TextEntity> projectTreeGrid = new Tree<TextEntity>(TextEntity::getName);
 
-        projectTreeGrid.addHierarchyColumn(TextEntity::getName);
+        //projectTreeGrid.addHierarchyColumn(TextEntity::getName);
 
 
         /*BookProject bookProject = new BookProject(0, "Fantasy", null);
@@ -126,11 +116,11 @@ public class MainView extends AppLayout {
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
         tabs.setId("tabs");
         //tabs.add(createMenuItems());
-        tree.addThemeVariants(GridVariant.LUMO_NO_BORDER);
+        //tree.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         /*tabs.add(projectTreeGrid);*/
         /*Tab tab = new Tab();
         tab.add(tree);*/
-        tabs.add(tree);
+        //tabs.add(tree);
         return tabs;
     }
 
