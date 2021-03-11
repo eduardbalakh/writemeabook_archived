@@ -3,7 +3,7 @@ package com.example.application.model;
 import javax.persistence.*;
 
 
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 public abstract class TextEntity {
 
