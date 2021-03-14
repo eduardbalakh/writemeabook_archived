@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.service.book;
 
 import com.example.application.model.Book;
 

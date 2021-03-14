@@ -1,8 +1,7 @@
-package com.example.application.dao.project;
+package com.example.application.dao.subsection;
 
-import com.example.application.dao.project.BookProjectDAO;
 import com.example.application.model.BookProject;
-import com.example.application.model.User;
+import com.example.application.model.Subsection;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,38 +11,38 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class BookProjectDAOImpl implements BookProjectDAO {
+public class SubsectionDAOImpl implements SubsectionDAO {
 
     @Autowired
     private EntityManager entityManager;
 
     @Override
-    public List<BookProject> getAllProjects() {
+    public List<Subsection> getAllProjects() {
         Session session = entityManager.unwrap(Session.class);
 
-        Query<BookProject> query = session.createQuery("from BookProject",
-                BookProject.class);
+        Query<Subsection> query = session.createQuery("from Subsection",
+                Subsection.class);
         return query.getResultList();
     }
 
     @Override
-    public void saveProject(BookProject project) {
+    public void saveProject(Subsection subsection) {
         Session session = entityManager.unwrap(Session.class);
-        session.saveOrUpdate(project);
+        session.saveOrUpdate(subsection);
     }
 
     @Override
-    public BookProject getProject(int id) {
+    public Subsection getProject(int id) {
         Session session = entityManager.unwrap(Session.class);
-        return session.get(BookProject.class, id);
+        return session.get(Subsection.class, id);
     }
 
     @Override
     public void deleteProject(int id) {
         Session session = entityManager.unwrap(Session.class);
-        Query<BookProject> query = session.createQuery("delete from BookProject " +
-                "where id=:projectId");
-        query.setParameter("projectId", id);
+        Query<BookProject> query = session.createQuery("delete from Subsection " +
+                "where id=:subsectionId");
+        query.setParameter("subsectionId", id);
         query.executeUpdate();
     }
 }

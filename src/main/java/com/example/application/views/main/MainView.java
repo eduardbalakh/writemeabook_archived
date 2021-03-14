@@ -1,5 +1,6 @@
 package com.example.application.views.main;
 
+import com.example.application.model.TreeTextEntity;
 import com.example.application.views.about.AboutView;
 import com.example.application.views.helloworld.HelloWorldView;
 import com.vaadin.flow.component.Component;
@@ -73,11 +74,12 @@ public class MainView extends AppLayout {
 
     private Tabs createMenu() {
 
-        //Tree<TextEntity> projectTreeGrid = new Tree<TextEntity>(TextEntity::getName);
+        Tree<TreeTextEntity> projectTreeGrid = new Tree<TreeTextEntity>(TreeTextEntity::getTitle);
 
-        //projectTreeGrid.addHierarchyColumn(TextEntity::getName);
+        projectTreeGrid.addHierarchyColumn(TreeTextEntity::getTitle);
 
 
+        //User
         /*BookProject bookProject = new BookProject(0, "Fantasy", null);
         Book book = new Book(1, "Final Fantasy XII", bookProject);
         Chapter chapter1 = new Chapter(2, "Chapter 1. Prologue", book);
@@ -88,21 +90,21 @@ public class MainView extends AppLayout {
         book.getChildren().add(chapter1);
         book.getChildren().add(chapter2);*/
 
-        /*List<TextEntity> all = Arrays.asList(bookProject, book, chapter1, chapter2);
+        /*List<TreeTextEntity> all = Arrays.asList(bookProject, book, chapter1, chapter2);
 
         all.forEach(p -> projectTreeGrid.getTreeData().addItem(p.getParent(), p));
 
-        Tree<TextEntity> tree = new Tree<>(TextEntity::getName);
-        TreeData<TextEntity> treeData = new TreeData<>();
+        Tree<TreeTextEntity> tree = new Tree<>(TreeTextEntity::getName);
+        TreeData<TreeTextEntity> treeData = new TreeData<>();
 
         treeData.addItem(null, bookProject);
         treeData.addItem(bookProject, book);
         treeData.addItem(book, chapter1);
         treeData.addItem(book, chapter2);
-        TreeDataProvider<TextEntity> inMemDP = new TreeDataProvider<>(treeData);
+        TreeDataProvider<TreeTextEntity> inMemDP = new TreeDataProvider<>(treeData);
         tree.setDataProvider(inMemDP);
         tree.addItemClickListener(event -> Notification.show("Click " + event.getItem().getName()));*/
-        //tree.setItems(all, TextEntity::getChildren);
+        //tree.setItems(all, TreeTextEntity::getChildren);
         /*tree.setItems(all, text -> {
             if (text.getChildren().size() > 0 && text.getChildren() != null) {
                 return text.getChildren();

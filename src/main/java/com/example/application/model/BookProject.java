@@ -1,6 +1,8 @@
 package com.example.application.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Data
 @Table(name = "projects")
-public class BookProject {
+public class BookProject implements TreeTextEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +26,25 @@ public class BookProject {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentBookProject")
+            mappedBy = "parentBookProject",
+            fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Book> books;
 
     public BookProject() {
     }
 
     public BookProject(User user, String title, int numOrder) {
-        this.user = user;
-        this.books = books;
         this.title = title;
         this.numOrder = numOrder;
+        this.user = Objects.requireNonNull(user);
+        user.addBookProject(this);
     }
 
     public BookProject(String projectName) {
@@ -53,7 +60,7 @@ public class BookProject {
     @Override
     public String toString() {
         return "BookProject{" +
-                "user=" + user +
+                "user=" + user.getId() +
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", numOrder=" + numOrder +

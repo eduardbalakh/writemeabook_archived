@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.service.chapter;
 
 import com.example.application.model.Chapter;
 

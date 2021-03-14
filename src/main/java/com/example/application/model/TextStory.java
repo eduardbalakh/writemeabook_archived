@@ -23,4 +23,12 @@ public class TextStory {
     public TextStory(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return "TextStory{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }

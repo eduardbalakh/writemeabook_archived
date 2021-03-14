@@ -1,6 +1,8 @@
 package com.example.application.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "sections")
 @Data
-public class Section {
+public class Section implements TreeTextEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +24,24 @@ public class Section {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     @JoinColumn(name = "chapter_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Chapter parentChapter;
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentSection")
+            mappedBy = "parentSection",
+            fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Subsection> subsections;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "text_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private TextStory text;
 
     public Section() {
@@ -43,4 +53,14 @@ public class Section {
         newSubsection.setParentSection(this);
     }
 
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", numOrder=" + numOrder +
+                ", parentChapter=" + parentChapter.getTitle() +
+                ", text=" + text.getText() +
+                '}';
+    }
 }

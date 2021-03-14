@@ -1,4 +1,4 @@
-package com.example.application.service;
+package com.example.application.service.project;
 
 import com.example.application.dao.project.BookProjectDAO;
 import com.example.application.model.BookProject;

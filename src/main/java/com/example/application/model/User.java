@@ -1,6 +1,8 @@
 package com.example.application.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,7 +22,10 @@ public class User {
     private Role userRole;
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user")
+            mappedBy = "user",
+    fetch = FetchType.EAGER)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<BookProject> bookProjects;
 
     public User() {
@@ -36,13 +41,5 @@ public class User {
         }
         bookProjects.add(Objects.requireNonNull(newProject));
         newProject.setUser(this);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userRole=" + userRole +
-                '}';
     }
 }
