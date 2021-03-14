@@ -1,18 +1,26 @@
 package com.example.application.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "chapters")
-public class Chapter extends TextEntity {
+public class Chapter {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "num_order")
+    private int numOrder;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
@@ -22,14 +30,17 @@ public class Chapter extends TextEntity {
             mappedBy = "parentChapter")
     private List<Section> sections;
 
-    @Column
-    private String text;
+
+    @OneToOne
+    @JoinColumn(name = "text_id")
+    private TextStory text;
 
     public Chapter() {
     }
 
-    public Chapter(String title, int numOrder, Book parentBook, List<Section> sections, String text) {
-        super(title, numOrder);
+    public Chapter(String title, int numOrder, Book parentBook, List<Section> sections, TextStory text) {
+        this.title = title;
+        this.numOrder = numOrder;
         this.parentBook = parentBook;
         this.sections = sections;
         this.text = text;
@@ -41,14 +52,6 @@ public class Chapter extends TextEntity {
         newSection.setParentChapter(this);
     }
 
-    @Override
-    public String toString() {
-        return "Chapter{" +
-                "parentBook=" + parentBook +
-                ", text='" + text + '\'' +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", numOrder=" + numOrder +
-                '}';
-    }
+
+
 }

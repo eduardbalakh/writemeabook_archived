@@ -1,3 +1,4 @@
+/*
 package com.example.application.model;
 
 import java.util.ArrayList;
@@ -24,3 +25,4 @@ public class TestClass {
         chapter2_1.addSectionToChapter(section2_2_1);
     }
 }
+*/

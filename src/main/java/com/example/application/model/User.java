@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "user_projects")
 @Data
 @Table(name = "users_details")
 public class User {
@@ -26,9 +26,8 @@ public class User {
     public User() {
     }
 
-    public User(Role userRole, List<BookProject> bookProjects) {
+    public User(Role userRole) {
         this.userRole = userRole;
-        this.bookProjects = bookProjects;
     }
 
     public void addBookProject(BookProject newProject) {

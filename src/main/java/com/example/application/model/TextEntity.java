@@ -1,3 +1,4 @@
+/*
 package com.example.application.model;
 
 import javax.persistence.*;
@@ -25,3 +26,4 @@ public abstract class TextEntity {
         this.numOrder = numOrder;
     }
 }
+*/

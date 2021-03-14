@@ -1,17 +1,26 @@
 package com.example.application.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = true)
-@Entity(name = "books")
+@Entity
 @Data
-public class Book extends TextEntity {
+@Table(name = "books")
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "num_order")
+    private int numOrder;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
@@ -25,11 +34,11 @@ public class Book extends TextEntity {
     public Book() {
     }
 
-    public Book(String title, int numOrder, BookProject parentBookProject, List<Chapter> chapters) {
+/*    public Book(String title, int numOrder, BookProject parentBookProject, List<Chapter> chapters) {
         super(title, numOrder);
         this.parentBookProject = parentBookProject;
         this.chapters = chapters;
-    }
+    }*/
 
     public void addChapterToBook(Chapter newChapter) {
         if (chapters == null)
