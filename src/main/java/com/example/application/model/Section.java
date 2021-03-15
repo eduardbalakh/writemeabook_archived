@@ -33,12 +33,12 @@ public class Section implements TreeTextEntity {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "parentSection",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Subsection> subsections;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "text_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

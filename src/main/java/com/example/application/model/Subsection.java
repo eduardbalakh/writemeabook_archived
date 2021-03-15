@@ -28,7 +28,7 @@ public class Subsection implements TreeTextEntity {
     @ToString.Exclude
     private Section parentSection;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "text_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

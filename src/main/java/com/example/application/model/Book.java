@@ -34,7 +34,7 @@ public class Book implements TreeTextEntity {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "parentBook",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Chapter> chapters;
@@ -48,12 +48,6 @@ public class Book implements TreeTextEntity {
         this.numOrder = numOrder;
         parentBookProject.addBookToProject(this);
     }
-
-/*    public Book(String title, int numOrder, BookProject parentBookProject, List<Chapter> chapters) {
-        super(title, numOrder);
-        this.parentBookProject = parentBookProject;
-        this.chapters = chapters;
-    }*/
 
     public void addChapterToBook(Chapter newChapter) {
         if (chapters == null)

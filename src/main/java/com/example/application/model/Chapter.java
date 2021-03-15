@@ -33,13 +33,13 @@ public class Chapter implements TreeTextEntity {
 
     @OneToMany(cascade = CascadeType.ALL,
             mappedBy = "parentChapter",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Section> sections;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "text_id")
     private TextStory text;
 
@@ -60,16 +60,16 @@ public class Chapter implements TreeTextEntity {
         newSection.setParentChapter(this);
     }
 
-/*    @Override
+    @Override
     public String toString() {
         return "Chapter{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", title='" + title +
                 ", numOrder=" + numOrder +
                 ", parentBook=" + parentBook.getTitle() +
                 ", text=" + text.getText() +
                 '}';
-    }*/
+    }
 
 /*    @Override
     public int hashCode() {

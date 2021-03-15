@@ -1,6 +1,8 @@
 package com.example.application.views.helloworld;
 
-import com.example.application.model.*;
+import com.example.application.model.Book;
+import com.example.application.model.Chapter;
+import com.example.application.model.TextStory;
 import com.example.application.service.book.BookService;
 import com.example.application.service.chapter.ChapterService;
 import com.example.application.service.textstory.TextStoryService;
@@ -14,8 +16,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @Route(value = "hello", layout = MainView.class)
 @PageTitle("Hello World")
@@ -64,8 +64,8 @@ public class HelloWorldView extends VerticalLayout {
 
         getData();
 
-        List<User> list = userService.getAllUsers();
-        textArea.setValue("list.stream().map(BookProject::toString).collect(Collectors.joining())");
+        //List<User> list = userService.getAllUsers();
+        //textArea.setValue("list.stream().map(BookProject::toString).collect(Collectors.joining())");
     }
 
     private void getData() {
