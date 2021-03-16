@@ -1,8 +1,5 @@
-package com.example.application.views.helloworld;
+package com.example.application.views.textview;
 
-import com.example.application.model.Book;
-import com.example.application.model.Chapter;
-import com.example.application.model.TextStory;
 import com.example.application.service.book.BookService;
 import com.example.application.service.chapter.ChapterService;
 import com.example.application.service.textstory.TextStoryService;
@@ -21,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Hello World")
 @CssImport("./styles/views/helloworld/hello-world-view.css")
 @RouteAlias(value = "", layout = MainView.class)
-public class HelloWorldView extends VerticalLayout {
+public class TextView extends VerticalLayout {
 
 /*    @Autowired
     private ProjectService projectService;*/
@@ -41,7 +38,7 @@ public class HelloWorldView extends VerticalLayout {
     private Button addNewTextArea;
     private RichTextEditor textArea;
 
-    public HelloWorldView() {
+    public TextView() {
         addClassName("hello-world-view");
         setWidthFull();
         setSizeFull();
@@ -73,11 +70,24 @@ public class HelloWorldView extends VerticalLayout {
         BookProject project = user.getBookProjects().get(0);
         Book book1 = new Book("The Fellowship of the Ring", 0, project);
         bookService.saveBook(book1);*/
-        Book book1 = bookService.getBook(1);
+        /*Book book1 = bookService.getBook(2);
         TextStory textStoryOfChapter1 = textStoryService.getText(1);
-        Chapter chapter1 = new Chapter("A Long-expected Party", 0, book1, textStoryOfChapter1);
+        Chapter chapter2 = new Chapter("A Long-expected Party3", 1, textStoryOfChapter1);
         //textStoryService.saveText(textStoryOfChapter1);
-        chapterService.saveChapter(chapter1);
+        book1.addChapterToBook(chapter2);
+        chapterService.saveChapter(chapter2);
+        bookService.saveBook(book1);*/
+
+/*        Book book_test = new Book("TestBook1", 0);
+        //Book book_test = bookService.getBook(3);
+        //TextStory textStory = textStoryService.getText(3);
+        TextStory textStory = new TextStory("TEST STORY");
+        Chapter chapter_test1 = new Chapter("chapter title 1", 0, textStory);
+        book_test.addChapterToBook(chapter_test1);
+        //textStoryService.saveText(textStory);
+        chapterService.saveChapter(chapter_test1);
+        bookService.saveBook(book_test);*/
+        bookService.deleteBook(7);
 
 
     }

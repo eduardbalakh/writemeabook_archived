@@ -24,15 +24,16 @@ public class BookProject implements TreeTextEntity {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+/*    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private User user;
+    private User user;*/
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentBookProject",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
+    @JoinColumn(name = "project_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Book> books;
@@ -40,11 +41,13 @@ public class BookProject implements TreeTextEntity {
     public BookProject() {
     }
 
-    public BookProject(User user, String title, int numOrder) {
+    public BookProject(
+            //User user,
+            String title, int numOrder) {
         this.title = title;
         this.numOrder = numOrder;
-        this.user = Objects.requireNonNull(user);
-        user.addBookProject(this);
+        //this.user = Objects.requireNonNull(user);
+        //user.addBookProject(this);
     }
 
     public BookProject(String projectName) {
@@ -54,13 +57,13 @@ public class BookProject implements TreeTextEntity {
     public void addBookToProject(Book newBook) {
         if (books == null) books = new ArrayList<>();
         books.add(Objects.requireNonNull(newBook));
-        newBook.setParentBookProject(this);
+        //newBook.setParentBookProject(this);
     }
 
     @Override
     public String toString() {
         return "BookProject{" +
-                "user=" + user.getId() +
+                //"user=" + user.getId() +
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", numOrder=" + numOrder +

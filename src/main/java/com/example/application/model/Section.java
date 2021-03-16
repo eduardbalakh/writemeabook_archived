@@ -24,21 +24,23 @@ public class Section implements TreeTextEntity {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL,
+/*    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "chapter_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Chapter parentChapter;
+    private Chapter parentChapter;*/
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentSection",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+    orphanRemoval = true)
+    @JoinColumn(name = "section_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Subsection> subsections;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY,
+    cascade = CascadeType.ALL)
     @JoinColumn(name = "text_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -50,7 +52,7 @@ public class Section implements TreeTextEntity {
     public void addSubsectionToSection(Subsection newSubsection) {
         if (subsections == null) subsections = new ArrayList<>();
         subsections.add(Objects.requireNonNull(newSubsection));
-        newSubsection.setParentSection(this);
+        //newSubsection.setParentSection(this);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class Section implements TreeTextEntity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", numOrder=" + numOrder +
-                ", parentChapter=" + parentChapter.getTitle() +
+                //", parentChapter=" + parentChapter.getTitle() +
                 ", text=" + text.getText() +
                 '}';
     }

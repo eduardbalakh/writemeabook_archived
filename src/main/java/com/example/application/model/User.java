@@ -22,8 +22,9 @@ public class User {
     private Role userRole;
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "user",
-    fetch = FetchType.LAZY)
+    fetch = FetchType.LAZY,
+    orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<BookProject> bookProjects;
@@ -40,6 +41,6 @@ public class User {
             bookProjects = new ArrayList<>();
         }
         bookProjects.add(Objects.requireNonNull(newProject));
-        newProject.setUser(this);
+        //newProject.setUser(this);
     }
 }

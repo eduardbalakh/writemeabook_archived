@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SubsectionService {
 
-    List<Subsection> getAllProjects();
+    List<Subsection> getAllSubsections();
 
-    void saveProject(Subsection subsection);
+    void saveSubsection(Subsection subsection);
 
-    Subsection getProject(int id);
+    Subsection getSubsection(int id);
 
-    void deleteProject(int id);
+    void deleteSubsection(int id);
 }

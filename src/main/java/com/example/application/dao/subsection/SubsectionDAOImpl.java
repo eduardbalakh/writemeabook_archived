@@ -17,7 +17,7 @@ public class SubsectionDAOImpl implements SubsectionDAO {
     private EntityManager entityManager;
 
     @Override
-    public List<Subsection> getAllProjects() {
+    public List<Subsection> getAllSubsections() {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Subsection> query = session.createQuery("from Subsection",
@@ -26,19 +26,19 @@ public class SubsectionDAOImpl implements SubsectionDAO {
     }
 
     @Override
-    public void saveProject(Subsection subsection) {
+    public void saveSubsection(Subsection subsection) {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(subsection);
     }
 
     @Override
-    public Subsection getProject(int id) {
+    public Subsection getSubsection(int id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Subsection.class, id);
     }
 
     @Override
-    public void deleteProject(int id) {
+    public void deleteSubsection(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query<BookProject> query = session.createQuery("delete from Subsection " +
                 "where id=:subsectionId");

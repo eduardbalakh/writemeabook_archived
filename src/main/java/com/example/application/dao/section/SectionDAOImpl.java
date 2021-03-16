@@ -16,7 +16,7 @@ public class SectionDAOImpl implements SectionDAO {
     private EntityManager entityManager;
 
     @Override
-    public List<Section> getAllProjects() {
+    public List<Section> getAllSections() {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Section> query = session.createQuery("from Section",
@@ -25,19 +25,19 @@ public class SectionDAOImpl implements SectionDAO {
     }
 
     @Override
-    public void saveProject(Section section) {
+    public void saveSection(Section section) {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(section);
     }
 
     @Override
-    public Section getProject(int id) {
+    public Section getSection(int id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Section.class, id);
     }
 
     @Override
-    public void deleteProject(int id) {
+    public void deleteSection(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query<Section> query = session.createQuery("delete from Section " +
                 "where id=:sectionId");

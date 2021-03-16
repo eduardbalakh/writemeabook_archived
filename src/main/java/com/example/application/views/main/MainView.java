@@ -2,7 +2,7 @@ package com.example.application.views.main;
 
 import com.example.application.model.TreeTextEntity;
 import com.example.application.views.about.AboutView;
-import com.example.application.views.helloworld.HelloWorldView;
+import com.example.application.views.textview.TextView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -127,7 +127,7 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("Substation 1", HelloWorldView.class), createTab("Substation 2", AboutView.class)};
+        return new Tab[]{createTab("Substation 1", TextView.class), createTab("Substation 2", AboutView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

@@ -42,6 +42,7 @@ public class TextStoryDAOImpl implements TextStoryDAO {
         Query<TextStory> query = session.createQuery("delete from TextStory " +
                 "where id=:textstoryId");
         query.setParameter("textstoryId", id);
-        query.executeUpdate();
+        if (getText(id) != null)
+            query.executeUpdate();
     }
 }

@@ -21,14 +21,15 @@ public class Subsection implements TreeTextEntity {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL,
+/*    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "section_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Section parentSection;
+    private Section parentSection;*/
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     @JoinColumn(name = "text_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

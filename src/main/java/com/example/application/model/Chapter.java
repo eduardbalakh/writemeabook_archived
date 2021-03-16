@@ -24,40 +24,44 @@ public class Chapter implements TreeTextEntity {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL,
+/*    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Book parentBook;
+    private Book parentBook;*/
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentChapter",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+    orphanRemoval = true)
+    @JoinColumn(name="chapter_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Section> sections;
 
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,
+    cascade = CascadeType.ALL)
     @JoinColumn(name = "text_id")
     private TextStory text;
 
     public Chapter() {
     }
 
-    public Chapter(String title, int numOrder, Book parentBook, TextStory text) {
+    public Chapter(String title, int numOrder,
+                   //Book parentBook,
+                   TextStory text) {
         this.title = title;
         this.numOrder = numOrder;
-        this.parentBook = parentBook;
+        //this.parentBook = parentBook;
         this.text = text;
-        parentBook.addChapterToBook(this);
+        //parentBook.addChapterToBook(this);
     }
 
     public void addSectionToChapter(Section newSection) {
         if (sections == null) sections = new ArrayList<>();
         sections.add(Objects.requireNonNull(newSection));
-        newSection.setParentChapter(this);
+        //newSection.setParentChapter(this);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class Chapter implements TreeTextEntity {
                 "id=" + id +
                 ", title='" + title +
                 ", numOrder=" + numOrder +
-                ", parentBook=" + parentBook.getTitle() +
+                //", parentBook=" + parentBook.getTitle() +
                 ", text=" + text.getText() +
                 '}';
     }

@@ -24,17 +24,18 @@ public class Book implements TreeTextEntity {
     @Column(name = "num_order")
     private int numOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL,
+/*    @ManyToOne(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private BookProject parentBookProject;
+    private BookProject parentBookProject;*/
 
 
     @OneToMany(cascade = CascadeType.ALL,
-            mappedBy = "parentBook",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
+    @JoinColumn(name = "book_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Chapter> chapters;
@@ -42,18 +43,19 @@ public class Book implements TreeTextEntity {
     public Book() {
     }
 
-    public Book(String title, int numOrder, BookProject parentBookProject) {
+    public Book(String title, int numOrder) {
+        //, BookProject parentBookProject) {
         this.title = title;
-        this.parentBookProject = parentBookProject;
+        //this.parentBookProject = parentBookProject;
         this.numOrder = numOrder;
-        parentBookProject.addBookToProject(this);
+        //parentBookProject.addBookToProject(this);
     }
 
     public void addChapterToBook(Chapter newChapter) {
         if (chapters == null)
             chapters = new ArrayList<>();
         chapters.add(Objects.requireNonNull(newChapter));
-        newChapter.setParentBook(this);
+        //newChapter.setParentBook(this);
     }
 
 /*    @Override

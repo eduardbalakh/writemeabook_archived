@@ -1,6 +1,8 @@
 package com.example.application.service.section;
 
 import com.example.application.dao.section.SectionDAO;
+import com.example.application.dao.subsection.SubsectionDAO;
+import com.example.application.dao.textstory.TextStoryDAO;
 import com.example.application.model.Section;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,28 +15,44 @@ public class SectionServiceImpl implements SectionService {
 
     @Autowired
     private SectionDAO sectionDAO;
+    @Autowired
+    private SubsectionDAO subsectionDAO;
+    @Autowired
+    private TextStoryDAO textStoryDAO;
 
     @Override
     @Transactional
-    public List<Section> getAllProjects() {
-        return sectionDAO.getAllProjects();
+    public List<Section> getAllSections() {
+        return sectionDAO.getAllSections();
     }
 
     @Override
     @Transactional
-    public void saveProject(Section section) {
-        sectionDAO.saveProject(section);
+    public void saveSection(Section section) {
+        sectionDAO.saveSection(section);
     }
 
     @Override
     @Transactional
-    public Section getProject(int id) {
-        return sectionDAO.getProject(id);
+    public Section getSection(int id) {
+        return sectionDAO.getSection(id);
     }
 
     @Override
     @Transactional
-    public void deleteProject(int id) {
-        sectionDAO.deleteProject(id);
+    public void deleteSection(int id) {
+        Section sectionToDelete = getSection(id);
+        if (sectionToDelete != null) {
+            if (sectionToDelete.getSubsections() != null && sectionToDelete.getSubsections().size() > 0) {
+                sectionToDelete.getSubsections().forEach((subsection) -> {
+                    subsectionDAO.deleteSubsection(subsection.getId());
+                });
+            }
+            sectionDAO.deleteSection(id);
+            if (sectionToDelete.getText() != null) {
+                textStoryDAO.deleteTextStory(sectionToDelete.getText().getId());
+            }
+        }
     }
 }
+
