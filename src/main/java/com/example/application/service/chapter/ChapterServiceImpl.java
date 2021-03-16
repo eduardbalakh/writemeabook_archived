@@ -1,9 +1,9 @@
 package com.example.application.service.chapter;
 
 import com.example.application.dao.chapter.ChapterDAO;
-import com.example.application.dao.section.SectionDAO;
-import com.example.application.dao.textstory.TextStoryDAO;
 import com.example.application.model.Chapter;
+import com.example.application.service.section.SectionService;
+import com.example.application.service.textstory.TextStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,9 @@ public class ChapterServiceImpl implements ChapterService {
     @Autowired
     private ChapterDAO chapterDAO;
     @Autowired
-    private SectionDAO sectionDAO;
+    private SectionService sectionService;
     @Autowired
-    private TextStoryDAO textStoryDAO;
+    private TextStoryService textStoryService;
 
     @Override
     @Transactional
@@ -28,8 +28,16 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     @Transactional
-    public void saveChapter(Chapter chapter) {
+    public Chapter saveChapter(Chapter chapter) {
+        if (chapter == null) throw new IllegalArgumentException("Chapter is null. Cannot save to DB");
+        if (chapter.getSections() != null && chapter.getSections().size() > 0)
+            chapter.getSections().forEach(section -> {
+                sectionService.saveSection(section);
+            });
+        if (chapter.getText() != null)
+            textStoryService.saveText(chapter.getText());
         chapterDAO.saveChapter(chapter);
+        return chapter;
     }
 
     @Override
@@ -43,15 +51,17 @@ public class ChapterServiceImpl implements ChapterService {
     public void deleteChapter(int id) {
         Chapter chapterToDelete = getChapter(id);
         if (chapterToDelete != null) {
-            if(chapterToDelete.getSections() != null && chapterToDelete.getSections().size() > 0) {
+            if (chapterToDelete.getSections() != null && chapterToDelete.getSections().size() > 0) {
                 chapterToDelete.getSections().forEach(section -> {
-                    sectionDAO.deleteSection(section.getId());
+                    sectionService.deleteSection(section.getId());
                 });
-                chapterDAO.deleteChapter(id);
-                if(chapterToDelete.getText() != null) {
-                    textStoryDAO.deleteTextStory(chapterToDelete.getText().getId());
-                }
+            }
+
+            chapterDAO.deleteChapter(id);
+            if (chapterToDelete.getText() != null) {
+                textStoryService.deleteText(chapterToDelete.getText().getId());
             }
         }
     }
 }
+

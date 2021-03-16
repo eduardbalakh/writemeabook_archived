@@ -1,8 +1,8 @@
 package com.example.application.service.project;
 
-import com.example.application.dao.book.BookDAO;
 import com.example.application.dao.project.BookProjectDAO;
 import com.example.application.model.BookProject;
+import com.example.application.service.book.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,20 +15,24 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private BookProjectDAO bookProjectDAO;
     @Autowired
-    private BookDAO bookDAO;
+    private BookService bookService;
 
 
     @Override
     @Transactional
     public List<BookProject> getAllProjects() {
-        List<BookProject> list = bookProjectDAO.getAllProjects();
-        return list;
+        return bookProjectDAO.getAllProjects();
     }
 
     @Override
     @Transactional
-    public void saveProject(BookProject project) {
+    public BookProject saveProject(BookProject project) {
+        if (project == null) throw new IllegalArgumentException("Project is null. Cannot save to DB");
+        if(project.getBooks() != null && project.getBooks().size() > 0)
+            project.getBooks().forEach(book ->
+                    bookService.saveBook(book));
         bookProjectDAO.saveProject(project);
+        return project;
     }
 
     @Override
@@ -44,7 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectToDelete != null) {
             if (projectToDelete.getBooks() != null && projectToDelete.getBooks().size() > 0) {
                 projectToDelete.getBooks().forEach(book -> {
-                    bookDAO.deleteBook(book.getId());
+                    bookService.deleteBook(book.getId());
                 });
             }
             bookProjectDAO.deleteProject(id);

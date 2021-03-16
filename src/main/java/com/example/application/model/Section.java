@@ -49,6 +49,13 @@ public class Section implements TreeTextEntity {
     public Section() {
     }
 
+    public Section(String title, int numOrder, TextStory text, Chapter parentChapter) {
+        this.title = title;
+        this.numOrder = numOrder;
+        this.text = text;
+        parentChapter.addSectionToChapter(this);
+    }
+
     public void addSubsectionToSection(Subsection newSubsection) {
         if (subsections == null) subsections = new ArrayList<>();
         subsections.add(Objects.requireNonNull(newSubsection));

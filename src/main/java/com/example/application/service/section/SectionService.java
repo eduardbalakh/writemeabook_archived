@@ -7,7 +7,7 @@ import java.util.List;
 public interface SectionService {
     List<Section> getAllSections();
 
-    void saveSection(Section section);
+    Section saveSection(Section section);
 
     Section getSection(int id);
 

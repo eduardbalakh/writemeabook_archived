@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProjectService {
     List<BookProject> getAllProjects();
 
-    void saveProject(BookProject project);
+    BookProject saveProject(BookProject project);
 
     BookProject getProject(int id);
 

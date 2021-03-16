@@ -43,12 +43,12 @@ public class Book implements TreeTextEntity {
     public Book() {
     }
 
-    public Book(String title, int numOrder) {
-        //, BookProject parentBookProject) {
+    public Book(String title, int numOrder//) {
+        , BookProject parentBookProject) {
         this.title = title;
         //this.parentBookProject = parentBookProject;
         this.numOrder = numOrder;
-        //parentBookProject.addBookToProject(this);
+        parentBookProject.addBookToProject(this);
     }
 
     public void addChapterToBook(Chapter newChapter) {

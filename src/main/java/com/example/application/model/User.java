@@ -22,7 +22,7 @@ public class User {
     private Role userRole;
 
     @OneToMany(cascade = CascadeType.ALL,
-    fetch = FetchType.LAZY,
+    fetch = FetchType.EAGER,
     orphanRemoval = true)
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude

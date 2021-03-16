@@ -2,6 +2,7 @@ package com.example.application.views.textview;
 
 import com.example.application.service.book.BookService;
 import com.example.application.service.chapter.ChapterService;
+import com.example.application.service.project.ProjectService;
 import com.example.application.service.textstory.TextStoryService;
 import com.example.application.service.user.UserService;
 import com.example.application.views.main.MainView;
@@ -20,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @RouteAlias(value = "", layout = MainView.class)
 public class TextView extends VerticalLayout {
 
-/*    @Autowired
-    private ProjectService projectService;*/
+   @Autowired
+    private ProjectService projectService;
 
     @Autowired
     private UserService userService;
@@ -66,28 +67,23 @@ public class TextView extends VerticalLayout {
     }
 
     private void getData() {
-        /*User user = userService.getUser(1);
-        BookProject project = user.getBookProjects().get(0);
-        Book book1 = new Book("The Fellowship of the Ring", 0, project);
-        bookService.saveBook(book1);*/
-        /*Book book1 = bookService.getBook(2);
-        TextStory textStoryOfChapter1 = textStoryService.getText(1);
-        Chapter chapter2 = new Chapter("A Long-expected Party3", 1, textStoryOfChapter1);
-        //textStoryService.saveText(textStoryOfChapter1);
-        book1.addChapterToBook(chapter2);
-        chapterService.saveChapter(chapter2);
-        bookService.saveBook(book1);*/
 
-/*        Book book_test = new Book("TestBook1", 0);
-        //Book book_test = bookService.getBook(3);
-        //TextStory textStory = textStoryService.getText(3);
-        TextStory textStory = new TextStory("TEST STORY");
-        Chapter chapter_test1 = new Chapter("chapter title 1", 0, textStory);
-        book_test.addChapterToBook(chapter_test1);
-        //textStoryService.saveText(textStory);
-        chapterService.saveChapter(chapter_test1);
-        bookService.saveBook(book_test);*/
-        bookService.deleteBook(7);
+/*        User user = userService.getUser(1);
+        BookProject project = new BookProject("TestProject1",1, user);
+        Book book_test = new Book("TestBook1", 1, project);
+        Chapter chapter1 = new Chapter("testchapter1", 0, null, book_test);
+        TextStory textStory1 = new TextStory("textStory1");
+        Section section1OfChapter1 = new Section("testSection1", 0, textStory1, chapter1);
+        TextStory textStory2 = new TextStory("textStory2");
+        Section section2OfChapter1 = new Section("testSection2", 0, textStory2, chapter1);
+        TextStory textStory3 = new TextStory("textStory3");
+        Chapter chapter2 = new Chapter("testchapter2", 1, textStory3, book_test);
+
+        userService.saveUser(user);*/
+
+        projectService.deleteProject(4);
+
+
 
 
     }

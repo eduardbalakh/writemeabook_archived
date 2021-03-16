@@ -41,13 +41,10 @@ public class BookProject implements TreeTextEntity {
     public BookProject() {
     }
 
-    public BookProject(
-            //User user,
-            String title, int numOrder) {
+    public BookProject(String title, int numOrder, User user) {
         this.title = title;
         this.numOrder = numOrder;
-        //this.user = Objects.requireNonNull(user);
-        //user.addBookProject(this);
+        user.addBookProject(this);
     }
 
     public BookProject(String projectName) {

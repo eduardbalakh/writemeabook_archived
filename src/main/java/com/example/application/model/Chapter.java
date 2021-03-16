@@ -48,14 +48,12 @@ public class Chapter implements TreeTextEntity {
     public Chapter() {
     }
 
-    public Chapter(String title, int numOrder,
-                   //Book parentBook,
-                   TextStory text) {
+    public Chapter(String title, int numOrder, TextStory text, Book parentBook) {
         this.title = title;
         this.numOrder = numOrder;
         //this.parentBook = parentBook;
         this.text = text;
-        //parentBook.addChapterToBook(this);
+        parentBook.addChapterToBook(this);
     }
 
     public void addSectionToChapter(Section newSection) {

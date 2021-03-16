@@ -2,6 +2,7 @@ package com.example.application.service.user;
 
 import com.example.application.dao.user.UserDAO;
 import com.example.application.model.User;
+import com.example.application.service.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
+    @Autowired
+    private ProjectService projectService;
 
     @Override
     @Transactional
@@ -22,8 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public User saveUser(User user) {
+        if (user == null) throw new IllegalArgumentException("User is null. Cannot save to DB");
+        if(user.getBookProjects() != null && user.getBookProjects().size() > 0)
+            user.getBookProjects().forEach(project -> projectService.saveProject(project));
         userDAO.saveUser(user);
+        return user;
     }
 
     @Override

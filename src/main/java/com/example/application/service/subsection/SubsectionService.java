@@ -8,7 +8,7 @@ public interface SubsectionService {
 
     List<Subsection> getAllSubsections();
 
-    void saveSubsection(Subsection subsection);
+    Subsection saveSubsection(Subsection subsection);
 
     Subsection getSubsection(int id);
 

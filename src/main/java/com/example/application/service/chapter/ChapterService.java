@@ -7,7 +7,7 @@ import java.util.List;
 public interface ChapterService {
     List<Chapter> getAllChapters();
 
-    void saveChapter(Chapter chapter);
+    Chapter saveChapter(Chapter chapter);
 
     Chapter getChapter(int id);
 

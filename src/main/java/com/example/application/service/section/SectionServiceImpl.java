@@ -1,9 +1,9 @@
 package com.example.application.service.section;
 
 import com.example.application.dao.section.SectionDAO;
-import com.example.application.dao.subsection.SubsectionDAO;
-import com.example.application.dao.textstory.TextStoryDAO;
 import com.example.application.model.Section;
+import com.example.application.service.subsection.SubsectionService;
+import com.example.application.service.textstory.TextStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,9 @@ public class SectionServiceImpl implements SectionService {
     @Autowired
     private SectionDAO sectionDAO;
     @Autowired
-    private SubsectionDAO subsectionDAO;
+    private SubsectionService subsectionService;
     @Autowired
-    private TextStoryDAO textStoryDAO;
+    private TextStoryService textStoryService;
 
     @Override
     @Transactional
@@ -28,8 +28,16 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     @Transactional
-    public void saveSection(Section section) {
+    public Section saveSection(Section section) {
+        if (section == null) throw new IllegalArgumentException("Section is null. Cannot save to DB");
+        if (section.getSubsections() != null && section.getSubsections().size() > 0)
+            section.getSubsections().forEach(subsection -> {
+                subsectionService.saveSubsection(subsection);
+            });
+        if (section.getText() != null)
+            textStoryService.saveText(section.getText());
         sectionDAO.saveSection(section);
+        return section;
     }
 
     @Override
@@ -45,12 +53,12 @@ public class SectionServiceImpl implements SectionService {
         if (sectionToDelete != null) {
             if (sectionToDelete.getSubsections() != null && sectionToDelete.getSubsections().size() > 0) {
                 sectionToDelete.getSubsections().forEach((subsection) -> {
-                    subsectionDAO.deleteSubsection(subsection.getId());
+                    subsectionService.deleteSubsection(subsection.getId());
                 });
             }
             sectionDAO.deleteSection(id);
             if (sectionToDelete.getText() != null) {
-                textStoryDAO.deleteTextStory(sectionToDelete.getText().getId());
+                textStoryService.deleteText(sectionToDelete.getText().getId());
             }
         }
     }

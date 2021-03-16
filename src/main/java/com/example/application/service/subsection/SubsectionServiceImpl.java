@@ -1,8 +1,8 @@
 package com.example.application.service.subsection;
 
 import com.example.application.dao.subsection.SubsectionDAO;
-import com.example.application.dao.textstory.TextStoryDAO;
 import com.example.application.model.Subsection;
+import com.example.application.service.textstory.TextStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ public class SubsectionServiceImpl implements SubsectionService {
     private SubsectionDAO subsectionDAO;
 
     @Autowired
-    private TextStoryDAO textStoryDAO;
+    private TextStoryService textStoryService;
 
     @Override
     @Transactional
@@ -26,8 +26,12 @@ public class SubsectionServiceImpl implements SubsectionService {
 
     @Override
     @Transactional
-    public void saveSubsection(Subsection subsection) {
+    public Subsection saveSubsection(Subsection subsection) {
+        if (subsection == null) throw new IllegalArgumentException("Subsection is null. Cannot save to DB");
+        if (subsection.getText() != null)
+            textStoryService.saveText(subsection.getText());
         subsectionDAO.saveSubsection(subsection);
+        return subsection;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class SubsectionServiceImpl implements SubsectionService {
         if (subsectionToDelete != null) {
             subsectionDAO.deleteSubsection(id);
             if (subsectionToDelete.getText() != null){
-                textStoryDAO.deleteTextStory(subsectionToDelete.getText().getId());
+                textStoryService.deleteText(subsectionToDelete.getText().getId());
             }
         }
     }

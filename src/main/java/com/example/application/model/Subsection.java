@@ -38,5 +38,11 @@ public class Subsection implements TreeTextEntity {
     public Subsection() {
     }
 
+    public Subsection(String title, int numOrder, TextStory text, Section parentSection) {
+        this.title = title;
+        this.numOrder = numOrder;
+        this.text = text;
+        parentSection.addSubsectionToSection(this);
+    }
 }
 
